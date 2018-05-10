@@ -1,24 +1,25 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.23;
 
 import "./ownable.sol";
 
-contract HdisContent {
+contract HdisContent is Ownable {
     struct Content {
         uint id;
         uint mediaId;
-        uint contentType;
+        uint mediaType;
         string name;
-        address owner;
+        string owner;
     }
 
-    Content[] content;
-    mapping (string=>uint) nameToContent;
+    event addContentEvent(Content indexed content);
 
-    function AddContent(uint _mediaId, uint _type, string _name) public {
-        Content memory _content;
-        uint _id = uint(keccak256(_name));
-        _content = Content(_id, _mediaId, _type, _name, msg.sender);
-        uint _idx = content.push(_content) - 1;
-        nameToContent[_name] = _idx;
+    mapping (uint=>Content) contents;
+
+    function addContent(uint _mediaId, uint _mediaType, string _name, string _owner) public onlyOwner returns (uint) {
+        uint _id = uint(keccak256(_name) ^ keccak256(_owner));
+        Content memory _content = Content(_id, _mediaId, _mediaType, _name, _owner);
+        contents[_id] = _content;
+        emit addContentEvent(_content);
+        return _id;
     }
 }
