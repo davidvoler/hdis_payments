@@ -17,11 +17,11 @@ contract HdisContent is Ownable {
 
     mapping (uint => Content) private contents;
     uint[] private contentIds;
-    mapping (address => uint[]) private purchase;
+    mapping (address => uint[]) private purchases;
 
     function generateId(string _name, address _creator) private pure
     returns (uint) {
-      return uint(keccak256(_name) ^ keccak256(_creator));
+        return uint(keccak256(_name) ^ keccak256(_creator));
     }
 
     function getContentById(uint _id) public view
@@ -39,7 +39,7 @@ contract HdisContent is Ownable {
         return contentIds;
     }
 
-    function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public onlyOwner
+    function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public
     returns (uint) {
         uint id = generateId(_name, _creator);
         address[] memory empty_array;
@@ -51,7 +51,7 @@ contract HdisContent is Ownable {
     }
 
     function addContributor(uint _id, address _contributor) public onlyOwner {
-      contents[_id].contributors.push(_contributor);
+        contents[_id].contributors.push(_contributor);
     }
 
     // TODO: limit num of purchases to make
