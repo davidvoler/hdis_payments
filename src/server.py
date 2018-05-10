@@ -4,6 +4,7 @@ from tornado.options import define, options, parse_command_line, parse_config_fi
 from handlers.dashboard_handler import DashboardHandler
 from handlers.content_handler import ContentHandler
 from handlers.content_by_id_handler import ContentbyIdHandler
+from handlers.purchase_handler import PurchaseHandler
 
 define("port", default=6666, help="run on port", type=int)
 define("mongo_host", default='localhost', help="mongo host", type=str)
@@ -15,6 +16,7 @@ def api():
         (r"/api/dashboard", DashboardHandler),
         (r"/api/content", ContentHandler),
         (r"/api/content_by_id", ContentbyIdHandler),
+        (r"/api/purchase", PurchaseHandler),
     ])
 
 if __name__ == "__main__":

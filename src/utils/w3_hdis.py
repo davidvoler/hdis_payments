@@ -51,4 +51,11 @@ def getContentById(id, private_key, public_key):
     rv = send_txn(getContentById_txn, private_key)
     return rv
 
+def purchaseContent(id, private_key, public_key):
+    global contract
+    purchaseContent_txn = contract.functions \
+        .purchaseContent(int(id)) \
+        .buildTransaction(txn_data(public_key))
+    send_txn(purchaseContent_txn, private_key)
+
 connect()
