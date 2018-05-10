@@ -5,7 +5,7 @@ import "truffle/DeployedAddresses.sol";
 
 import "../contracts/HdisContent.sol";
 
-contract TestPurchaseContentContract is HdisContent {
+contract TestPurchaseContentContract {
     function testPurchaseContent() public {
         HdisContent hdisContent = HdisContent(DeployedAddresses.HdisContent());
         string memory name = "test";
@@ -16,7 +16,7 @@ contract TestPurchaseContentContract is HdisContent {
 
         uint id = hdisContent.addContent(name, mediaId, mediaType, creator, price);
         (mediaId, mediaType, creator, price) = hdisContent.getContentById(id);
-        hdisContent.purchaseContent.value(price)(id);
+        hdisContent.purchaseContent.value(0)(id);
     }
 
 } 
