@@ -1,8 +1,13 @@
 from tornado import ioloop, web
 import re
-import pymongo
+from tornado.options import define, options, parse_command_line, parse_config_file
 from handlers.dashboard_handler import  DashboardHandler
 
+
+define("port", default=6666, help="run on port", type=int)
+define("mongo_host", default='localhost', help="mongo host", type=str)
+define("mongo_port", default=27017, help="mongo port", type=int)
+define("mongo_db_name", default='tracker', help="mongo database name", type=str)
 
 
 
