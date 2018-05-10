@@ -38,7 +38,7 @@ contract HdisContent is Ownable {
     // the array traversable in a reasonable time
     function purchaseContent(uint _contentId) public payable {
         uint fee = msg.value;
-        Content content = contents[_contentId];
+        Content memory content = contents[_contentId];
         require(fee >= content.weiPrice);
         address buyer = msg.sender;
         emit purchaseContentEvent(content, buyer);
