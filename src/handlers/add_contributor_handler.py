@@ -9,5 +9,5 @@ class AddContributorHandler(web.RequestHandler):
     def get(self):
         media_id    = self.get_argument("media_id")
         contributor = self.get_argument("contributor", PUBLIC_KEY)
-        rs = addContributor(media_id, contributo, PRIVATE_KEY, PUBLIC_KEY)
+        rs = addContributor(media_id, contributor, PRIVATE_KEY, PUBLIC_KEY)
         self.write("Contributor added.")
