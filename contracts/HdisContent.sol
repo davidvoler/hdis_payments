@@ -1,5 +1,4 @@
 pragma solidity ^0.4.23;
-pragma experimental ABIEncoderV2;
 
 import "./ownable.sol";
 
@@ -18,11 +17,12 @@ contract HdisContent is Ownable {
     mapping (uint => Content) private contents;
     mapping (address => uint[]) private purchase;
 
-    function getContentById(uint _id) public view returns (Content) {
-        return contents[_id];
+    function getContentById(uint _id) public view returns (uint, uint, address, uint) {
+        Content memory content = contents[_id];
+        return (content.mediaId, content.mediaType, content.creator, content.weiPrice);
     }
 
-    function getContentByName(string _name, address _creator) public view returns (Content) {
+    function getContentByName(string _name, address _creator) public view returns (uint, uint, address, uint){
         return getContentById(uint(keccak256(_name) ^ keccak256(_creator)));
     }
 
