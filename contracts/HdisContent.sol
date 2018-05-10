@@ -15,6 +15,7 @@ contract HdisContent is Ownable {
     event purchaseContentEvent(Content indexed content, address buyer);
 
     mapping (uint => Content) private contents;
+    uint[] private contentIds;
     mapping (address => uint[]) private purchase;
 
     function getContentById(uint _id) public view returns (uint, uint, address, uint) {
@@ -26,10 +27,15 @@ contract HdisContent is Ownable {
         return getContentById(uint(keccak256(_name) ^ keccak256(_creator)));
     }
 
+    function getContentIds() public view returns (uint[]) {
+        return contentIds;
+    }
+
     function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public onlyOwner returns (uint) {
         uint id = uint(keccak256(_name) ^ keccak256(_creator));
         Content memory _content = Content(_mediaId, _mediaType, _creator, _price);
         contents[id] = _content;
+        contentIds.push(id);
         emit addContentEvent(_content);
         return id;
     }
