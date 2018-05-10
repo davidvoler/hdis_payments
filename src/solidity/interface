@@ -46,6 +46,20 @@
 	},
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "getContentIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "_name",
@@ -94,41 +108,21 @@
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"constant": false,
 		"inputs": [
 			{
-				"name": "_v",
+				"name": "_id",
 				"type": "uint256"
-			}
-		],
-		"name": "sillyFunc",
-		"outputs": [
+			},
 			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_v",
+				"name": "_contributor",
 				"type": "address"
 			}
 		],
-		"name": "sillyFunc",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
+		"name": "addContributor",
+		"outputs": [],
 		"payable": false,
-		"stateMutability": "pure",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -200,6 +194,10 @@
 					{
 						"name": "weiPrice",
 						"type": "uint256"
+					},
+					{
+						"name": "contributors",
+						"type": "address[]"
 					}
 				],
 				"indexed": true,
@@ -230,6 +228,10 @@
 					{
 						"name": "weiPrice",
 						"type": "uint256"
+					},
+					{
+						"name": "contributors",
+						"type": "address[]"
 					}
 				],
 				"indexed": true,
