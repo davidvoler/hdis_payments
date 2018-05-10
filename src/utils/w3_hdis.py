@@ -51,6 +51,13 @@ def getContentById(id, private_key, public_key):
     rv = send_txn(getContentById_txn, private_key)
     return rv
 
+def addContributor(id, contributor, private_key, public_key):
+    global contract
+    addContributor_txn = contract.functions \
+        .addContributor(int(id), contributor) \
+        .buildTransaction(txn_data(public_key))
+    send_txn(addContributor_txn, private_key)
+
 def purchaseContent(id, private_key, public_key):
     global contract
     purchaseContent_txn = contract.functions \

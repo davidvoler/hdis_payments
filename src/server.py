@@ -5,6 +5,7 @@ from handlers.dashboard_handler import DashboardHandler
 from handlers.content_handler import ContentHandler
 from handlers.content_by_id_handler import ContentbyIdHandler
 from handlers.purchase_handler import PurchaseHandler
+from handlers.add_contributor_handler import AddContributorHandler
 
 define("port", default=6666, help="run on port", type=int)
 define("mongo_host", default='localhost', help="mongo host", type=str)
@@ -17,6 +18,7 @@ def api():
         (r"/api/content", ContentHandler),
         (r"/api/content_by_id", ContentbyIdHandler),
         (r"/api/purchase", PurchaseHandler),
+        (r"/api/contributor", AddContributorHandler),
     ])
 
 if __name__ == "__main__":
