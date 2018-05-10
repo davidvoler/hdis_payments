@@ -4,15 +4,21 @@ import "./ownable.sol";
 
 contract HdisContent {
     struct Content {
-        uint type;
+        uint id;
+        uint mediaId;
+        uint contentType;
         string name;
+        address owner;
     }
 
     Content[] content;
-    mapping (string->uint) nameToContent;
+    mapping (string=>uint) nameToContent;
 
-    function AddContent(string _name, uint _type) public {
-        uint id = content.push(Content(_name, _type)) - 1;
-        nameToContent[_name] = id;
+    function AddContent(uint _mediaId, uint _type, string _name) public {
+        Content memory _content;
+        uint _id = uint(keccak256(_name));
+        _content = Content(_id, _mediaId, _type, _name, msg.sender);
+        uint _idx = content.push(_content) - 1;
+        nameToContent[_name] = _idx;
     }
 }
