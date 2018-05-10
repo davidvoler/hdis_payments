@@ -19,21 +19,29 @@ contract HdisContent is Ownable {
     uint[] private contentIds;
     mapping (address => uint[]) private purchase;
 
-    function getContentById(uint _id) public view returns (uint, uint, address, uint) {
-        Content memory content = contents[_id];
-        return (content.mediaId, content.mediaType, content.creator, content.weiPrice);
+    function generateId(string _name, address _creator) private pure
+    returns (uint) {
+      return uint(keccak256(_name) ^ keccak256(_creator));
     }
 
-    function getContentByName(string _name, address _creator) public view returns (uint, uint, address, uint){
-        return getContentById(uint(keccak256(_name) ^ keccak256(_creator)));
+    function getContentById(uint _id) public view
+    returns (uint, uint, address, uint, address[]) {
+        Content memory content = contents[_id];
+        return (content.mediaId, content.mediaType, content.creator, content.weiPrice, content.contributors);
+    }
+
+    function getContentByName(string _name, address _creator) public view
+    returns (uint, uint, address, uint, address[]) {
+        return getContentById(generateId(_name, _creator));
     }
 
     function getContentIds() public view returns (uint[]) {
         return contentIds;
     }
 
-    function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public onlyOwner returns (uint) {
-        uint id = uint(keccak256(_name) ^ keccak256(_creator));
+    function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public onlyOwner
+    returns (uint) {
+        uint id = generateId(_name, _creator);
         address[] memory empty_array;
         Content memory _content = Content(_mediaId, _mediaType, _creator, _price, empty_array);
         contents[id] = _content;
