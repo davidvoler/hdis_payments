@@ -8,6 +8,7 @@ contract HdisContent is Ownable {
         uint mediaType;
         address creator;
         uint weiPrice;
+        address[] contributors;
     }
 
     // This could be useful for a copyright watchtower
@@ -33,11 +34,16 @@ contract HdisContent is Ownable {
 
     function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public onlyOwner returns (uint) {
         uint id = uint(keccak256(_name) ^ keccak256(_creator));
-        Content memory _content = Content(_mediaId, _mediaType, _creator, _price);
+        address[] memory empty_array;
+        Content memory _content = Content(_mediaId, _mediaType, _creator, _price, empty_array);
         contents[id] = _content;
         contentIds.push(id);
         emit addContentEvent(_content);
         return id;
+    }
+
+    function addContributor(uint _id, address _contributor) public onlyOwner {
+      contents[_id].contributors.push(_contributor);
     }
 
     // TODO: limit num of purchases to make
