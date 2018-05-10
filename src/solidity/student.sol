@@ -1,8 +1,6 @@
 pragma solidity ^0.4.19;
 
 import "./ownable.sol";
-import "./ownable.sol";
-import "./ownable.sol";
 
 contract HdisMediaFactory is HdisContentFactory {
 
