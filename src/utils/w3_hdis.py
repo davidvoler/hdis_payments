@@ -8,6 +8,8 @@ ABI=json.load(open("interface", "r"))
 PUBLIC_KEY="0x802f75067b7502FCF18ffA6B43A143f37ac47fc2"
 PRIVATE_KEY="0xcc9da801e2338bbf9fe025e06fe55eb5a055651d270483b2161e8f9b011ba3c1"
 CHAIN_ID=3 # Ropsten
+GAS=1000000
+GAS_PRICE=w3.toWei('10', 'gwei')
 
 class HDIS_W3():
     def __init__(self, private_key):
@@ -23,10 +25,7 @@ class HDIS_W3():
 
     def txn_data(self):
         nonce = self.w3.eth.getTransactionCount(PUBLIC_KEY)
-        return {'chainId': CHAIN_ID,
-            'gas': 1000000,
-            'gasPrice': w3.toWei('10', 'gwei'),
-            'nonce': nonce,}
+        return {'chainId': CHAIN_ID, 'gas': GAS, 'gasPrice': GAS_PRICE, 'nonce': nonce,}
 
     def send_txn(self, txn):
         signed_txn = self.w3.eth.account.signTransaction(txn, private_key=PRIVATE_KEY)
