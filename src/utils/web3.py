@@ -5,6 +5,9 @@ from web3.contract import ConciseContract
 
 w3_ws = None
 w3_http = None
+CONTRACT_ADDESS = ""
+contract_interface = {}
+
 
 def get_http_w3(hostname="http://localhost"):
   global w3_http
@@ -30,23 +33,37 @@ def get_contract_instance(contract_address, contract_interface, contract_factory
   contract_instance = http_w3.eth.contract(address=contract_address, abi=abi,ContractFactoryClass=contract_factory_class)
   return contract_instance;
 
-
+#Content utility function
 def create_content(contract_address, contract_interface, contract_factory_class, data, account):
   contract_instance = get_contract_instance((contract_address, contract_interface, contract_factory_class)
   contract_instance.createContent(data, transact={'from': account})
-
-def purchese_content(contract_address, contract_interface, contract_factory_class, content_id, account)
-  contract_instance = get_contract_instance((contract_address, contract_interface, contract_factory_class)
-  contract_instance.purcheseContent(content_id, transact={'from': account})
 
 def list_content(contract_address, contract_interface, contract_factory_class)
   contract_instance = get_contract_instance((contract_address, contract_interface, contract_factory_class)
   contract_instance.listContent(transact={'from': account})
 
-def hasAccess(contract_address, contract_interface, contract_factory_class, student_id, content_id)
+#student function 
+
+def create_student(student_id):
+  """Creates a new studetn
+  
+  Arguments:
+    student_address {[type]} -- [description]
+  """
+  pass
+
+def list_students():
+  """Returns a list of students
+  """
+  pass
+
+def has_access(contract_address, contract_interface, contract_factory_class, student_id, content_id)
   contract_instance = get_contract_instance((contract_address, contract_interface, contract_factory_class)
   contract_instance.hasAccess(student_id, content_id)  
 
 
+def purchese_content(contract_address, contract_interface, contract_factory_class, content_id, account)
+  contract_instance = get_contract_instance((contract_address, contract_interface, contract_factory_class)
+  contract_instance.purcheseContent(content_id, transact={'from': account})
   
   
