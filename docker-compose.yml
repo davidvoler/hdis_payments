@@ -1,0 +1,13 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - './data/mongodb:/data/db'      
+  # hdis_payments:
+  #   image: hdis/payments:latest
+  #   build: .
+  #   ports:
+  #     - "6666:6666"
