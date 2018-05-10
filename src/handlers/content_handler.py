@@ -1,11 +1,16 @@
 from tornado import web
 import json
-from utils.web3 import list_content,create_content
+from utils.w3_hdis import addContent
+
+PUBLIC_KEY="0x802f75067b7502FCF18ffA6B43A143f37ac47fc2"
+PRIVATE_KEY="0xcc9da801e2338bbf9fe025e06fe55eb5a055651d270483b2161e8f9b011ba3c1"
 
 class ContentHandler(web.RequestHandler):
-    def post(self):
-      create_content()
-      self.write("Create hdis content")
     def get(self):
-      contents = list_content()
-      self.write(json.dumps(contents))
+        name       = self.get_argument("name")
+        media_id   = self.get_argument("media_id", "1")
+        media_type = self.get_argument("media_type", "1")
+        creator    = self.get_argument("creator", PUBLIC_KEY)
+        price      = self.get_argument("price", "100")
+        rs = addContent(name, media_id, media_type, creator, price, PRIVATE_KEY, PUBLIC_KEY)
+        self.write(json.dumps({"content_id":rs}))
