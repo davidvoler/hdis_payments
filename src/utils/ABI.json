@@ -1,143 +1,20 @@
 [
 	{
-		"constant": true,
+		"anonymous": false,
 		"inputs": [
 			{
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "getContentById",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
+				"indexed": true,
+				"name": "previousOwner",
 				"type": "address"
 			},
 			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_contentId",
-				"type": "uint256"
-			}
-		],
-		"name": "purchaseContent",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getContentIds",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"name": "_creator",
-				"type": "address"
-			}
-		],
-		"name": "getContentByName",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "address"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"name": "_contributor",
-				"type": "address"
-			}
-		],
-		"name": "addContributor",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
+				"indexed": true,
 				"name": "newOwner",
 				"type": "address"
 			}
 		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+		"name": "OwnershipTransferred",
+		"type": "event"
 	},
 	{
 		"constant": false,
@@ -203,9 +80,14 @@
 				"indexed": true,
 				"name": "content",
 				"type": "tuple"
+			},
+			{
+				"indexed": false,
+				"name": "buyer",
+				"type": "address"
 			}
 		],
-		"name": "addContentEvent",
+		"name": "purchaseContentEvent",
 		"type": "event"
 	},
 	{
@@ -237,31 +119,157 @@
 				"indexed": true,
 				"name": "content",
 				"type": "tuple"
-			},
-			{
-				"indexed": false,
-				"name": "buyer",
-				"type": "address"
 			}
 		],
-		"name": "purchaseContentEvent",
+		"name": "addContentEvent",
 		"type": "event"
 	},
 	{
-		"anonymous": false,
+		"constant": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"name": "previousOwner",
-				"type": "address"
+				"name": "_id",
+				"type": "uint256"
 			},
 			{
-				"indexed": true,
+				"name": "_contributor",
+				"type": "address"
+			}
+		],
+		"name": "addContributor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_contentId",
+				"type": "uint256"
+			}
+		],
+		"name": "purchaseContent",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "newOwner",
 				"type": "address"
 			}
 		],
-		"name": "OwnershipTransferred",
-		"type": "event"
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "getContentById",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_creator",
+				"type": "address"
+			}
+		],
+		"name": "getContentByName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getContentIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]
