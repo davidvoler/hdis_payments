@@ -1,6 +1,6 @@
+import { inLogs } from './expectEvent';
 var assert = require('assert');
-require('truffle-test-utils').init();
-;var HdisContent = artifacts.require('../contracts/HdisContent.sol');
+var HdisContent = artifacts.require('../contracts/HdisContent.sol');
 
 contract('HdisContent', function(accounts){
 
@@ -36,16 +36,13 @@ contract('HdisContent', function(accounts){
                 const mediaType = 2;
                 const creator = 0;
                 const rightPrice = "10";
+                let b1 = web3.eth.getBalance(accounts[0]);
                 instance.addContent.call(name, mediaId, mediaType, creator, rightPrice).then(
-                  async function(contentId) {
-                    let result = await instance.purchaseContent.call(contentId, {value: (rightPrice)});
-                    assert.web3Event(result, {
-                      event: "purchaseContentEvent",
-                      args: {
-                        content: [mediaId, mediaType, creator, rightPrice],
-                        buyer: accounts[0]
-                      }
-                    }, "No purchase event");
+                  function(contentId) {
+                    instance.purchaseContent.call(contentId, {value: (rightPrice), sender: accounts[0]}).then(function(){
+                    let b2 = web3.eth.getBalance(accounts[0]);
+                    assert.notEqual(b1, b2, "Balance not changed");
+                    });
                   }).then(done);
             });
         });
@@ -61,9 +58,45 @@ contract('HdisContent', function(accounts){
                   function(contentId){
                     instance.purchaseContent.call(contentId, {value: web3._extend.utils.toWei(lowPrice - 1)}).then(
                       function(events){
-                        console.log(events);
                         assert.equal(events.length, 0, "event emitted");
                       });
+                  }).then(done);
+            });
+        });
+        
+        it('should test that content can be contributed to', function(done){
+            HdisContent.new({from: accounts[0]}).then(function(instance){
+                const name = "test";
+                const mediaId = 1;
+                const mediaType = 2;
+                const creator = 0;
+                const rightPrice = "10";
+                instance.addContent.call(name, mediaId, mediaType, creator, rightPrice).then(
+                  function(contentId) {
+                     instance.addContributor(contentId, accounts[0]); 
+                  }).then(done);
+            });
+        });
+        
+        it('should test that payments are distributed', function(done){
+            HdisContent.new({from: accounts[0]}).then(function(instance){
+                const name = "test";
+                const mediaId = 1;
+                const mediaType = 2;
+                const creator = 0;
+                const rightPrice = "10";
+                instance.addContent.call(name, mediaId, mediaType, creator, rightPrice).then(
+                  function(contentId) {
+                     instance.addContributor(contentId, accounts[1]); 
+                     instance.addContributor(contentId, accounts[2]); 
+                     let b1Before = web3.eth.getBalance(accounts[1]);
+                     instance.purchaseContent.call(
+                       contentId, {value: (rightPrice), sender: accounts[0]}).then(
+                         function(){
+                            let b1After = web3.eth.getBalance(accounts[1]);
+                            assert.notEqual(b1Before, b1After, "balance");
+                         }
+                       )
                   }).then(done);
             });
         });
