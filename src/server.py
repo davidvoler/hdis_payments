@@ -14,11 +14,11 @@ define("mongo_db_name", default='tracker', help="mongo database name", type=str)
 
 def api():
     return web.Application([
-        (r"/api/dashboard", DashboardHandler),
-        (r"/api/content", ContentHandler),
-        (r"/api/content_by_id", ContentbyIdHandler),
-        (r"/api/purchase", PurchaseHandler),
-        (r"/api/contributor", AddContributorHandler),
+        (r"/payments/api/dashboard", DashboardHandler),
+        (r"/payments/api/content", ContentHandler),
+        (r"/payments/api/content_by_id", ContentbyIdHandler),
+        (r"/payments/api/purchase", PurchaseHandler),
+        (r"/payments/api/contributor", AddContributorHandler),
     ])
 
 if __name__ == "__main__":
