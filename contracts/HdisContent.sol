@@ -1,8 +1,9 @@
 pragma solidity ^0.4.23;
 
 import "./ownable.sol";
+import "./SplitPayment.sol";
 
-contract HdisContent is Ownable {
+contract HdisContent is SplitPayment, Ownable {
     struct Content {
         uint mediaId;
         uint mediaType;
@@ -17,11 +18,13 @@ contract HdisContent is Ownable {
 
     mapping (uint => Content) private contents;
     uint[] private contentIds;
-    mapping (address => uint[]) private purchase;
+    mapping (address => uint[]) private purchases;
+
+    constructor() SplitPayment(new address[](0), new uint[](0)) Ownable() public {}
 
     function generateId(string _name, address _creator) private pure
     returns (uint) {
-      return uint(keccak256(_name) ^ keccak256(_creator));
+        return uint(keccak256(_name) ^ keccak256(_creator));
     }
 
     function getContentById(uint _id) public view
@@ -39,11 +42,11 @@ contract HdisContent is Ownable {
         return contentIds;
     }
 
-    function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public onlyOwner
+    function addContent(string _name, uint _mediaId, uint _mediaType, address _creator, uint _price) public
     returns (uint) {
         uint id = generateId(_name, _creator);
-        address[] memory empty_array;
-        Content memory _content = Content(_mediaId, _mediaType, _creator, _price, empty_array);
+        address[] memory emptyArray;
+        Content memory _content = Content(_mediaId, _mediaType, _creator, _price, emptyArray);
         contents[id] = _content;
         contentIds.push(id);
         emit addContentEvent(_content);
@@ -51,7 +54,7 @@ contract HdisContent is Ownable {
     }
 
     function addContributor(uint _id, address _contributor) public onlyOwner {
-      contents[_id].contributors.push(_contributor);
+        contents[_id].contributors.push(_contributor);
     }
 
     // TODO: limit num of purchases to make
@@ -61,6 +64,9 @@ contract HdisContent is Ownable {
         Content memory content = contents[_contentId];
         require(fee >= content.weiPrice);
         address buyer = msg.sender;
+        purchases[buyer].push(_contentId);
         emit purchaseContentEvent(content, buyer);
     }
+
+
 }

@@ -21,9 +21,10 @@ contract TestAddContentContract is HdisContent {
             weiPrice: price
         });
         uint id = hdisContent.addContent(name, mediaId, mediaType, creator, price);
-        //(mediaId, mediaType, creator, price) = hdisContent.getContentById(id);
-        //Content memory createdContent = Content(mediaId, mediaType, creator, price);
-        //Assert.equal(createdContent.mediaId, goldContent.mediaId, "WTF");
+        (mediaId, mediaType, creator, price) = hdisContent.getContentById(id);
+        Content memory createdContent = Content(mediaId, mediaType, creator, price);
+        Assert.equal(createdContent.mediaId, goldContent.mediaId, "WTF");
+        Assert.equal(createdContent.mediaType, goldContent.mediaType, "WTF");
     }
 
 } 
