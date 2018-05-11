@@ -12,5 +12,9 @@ class ContentHandler(web.RequestHandler):
         media_type = self.get_argument("media_type", "1")
         creator    = self.get_argument("creator", PUBLIC_KEY)
         price      = self.get_argument("price", "100")
-        rs = addContent(name, media_id, media_type, creator, price, PRIVATE_KEY, PUBLIC_KEY)
-        self.write(json.dumps({"content_id":rs}))
+        try:
+          rs = addContent(name, media_id, media_type, creator, price, PRIVATE_KEY, PUBLIC_KEY)
+          self.write(json.dumps({"content_id":rs}))
+        except Exception as e:
+          self.set_status(500, str(e))
+          self.write(json.dumps({"error":str(e)}))          

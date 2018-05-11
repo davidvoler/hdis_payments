@@ -11,5 +11,9 @@ class PurchaseHandler(web.RequestHandler):
       student_private_key = self.get_argument('private_key', PRIVATE_KEY)
       content_id          = self.get_argument('content_id')
       #permited = has_access(student_public_key, content_id)
-      purchaseContent(content_id, student_private_key, student_public_key)
-      self.write("Purchased")
+      try:
+        purchaseContent(content_id, student_private_key, student_public_key)
+        self.write(json.dumps({"msg":"Purchased"}))
+      except Exception as e:
+          self.set_status(500, str(e))
+          self.write(json.dumps({"error":str(e)}))
