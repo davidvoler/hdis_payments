@@ -3,7 +3,8 @@ pragma solidity ^0.4.23;
 import "./ownable.sol";
 import "./SplitPayment.sol";
 
-contract HdisContent is SplitPayment, Ownable {
+contract HdisContent is Ownable {  
+    using SafeMath for uint256;
     struct Content {
         uint mediaId;
         uint mediaType;
@@ -20,7 +21,69 @@ contract HdisContent is SplitPayment, Ownable {
     uint[] private contentIds;
     mapping (address => uint[]) private purchases;
 
-    constructor() SplitPayment(new address[](0), new uint[](0)) Ownable() public {}
+    mapping (uint256 => uint256) public totalShares;
+    mapping (uint256 => uint256) public totalReleased;
+    mapping(uint256 => mapping(address => uint256)) public shares;
+    mapping(uint256 => mapping(address => uint256)) public released;
+    mapping(uint256 => address[]) public payees;
+
+    /**
+     * @dev Constructor
+     */
+    constructor() Ownable() public payable {
+    }
+
+    /**
+     * @dev payable fallback
+     */
+    function () public payable {}
+
+    /**
+     * @dev Claim your share of the balance.
+     */
+    function claim(uint _content) public {
+        address payee = msg.sender;
+        payTo(_content, payee);
+    }
+
+    function payTo(uint _content, address _payee) internal {
+        require(shares[_content][_payee] > 0);
+
+        uint256 totalReceived = address(this).balance.add(totalReleased[_content]);
+        uint256 payment = totalReceived.mul(shares[_content][_payee]).div(totalShares[_content]).sub(released[_content][_payee]);
+
+        require(payment != 0);
+        require(address(this).balance >= payment);
+
+        released[_content][_payee] = released[_content][_payee].add(payment);
+        totalReleased[_content] = totalReleased[_content].add(payment);
+
+        _payee.transfer(payment);
+    }
+
+    function distribute(uint _content) internal {
+        for (uint256 i = 0; i < payees[_content].length; i++) {
+            payTo(_content, payees[_content][i]);
+        }
+    }
+    /**
+    * @dev Add a new payee to the contract.
+    * @param _payee The address of the payee to add.
+        * @param _shares The number of shares owned by the payee.
+        */
+    function addPayee(uint _content, address _payee, uint256 _shares) internal {
+        require(_payee != address(0));
+        require(_shares > 0);
+        require(shares[_content][_payee] == 0);
+
+        payees[_content].push(_payee);
+        addShares(_content, _payee, _shares);
+    }
+
+    function addShares(uint _content, address _payee, uint256 _shares) internal {
+        shares[_content][_payee] = _shares;
+        totalShares[_content] = totalShares[_content].add(_shares);
+    }
 
     function generateId(string _name, address _creator) private pure
     returns (uint) {
@@ -55,7 +118,12 @@ contract HdisContent is SplitPayment, Ownable {
 
     function addContributor(uint _id, address _contributor) public onlyOwner {
         contents[_id].contributors.push(_contributor);
-        addPayee(_contributor, 1);
+        if(shares[_id][_contributor] == 0) {
+            addPayee(_id, _contributor, 1);
+        }
+        else {
+            addShares(_id, _contributor, 1);
+        }
     }
 
     // TODO: limit num of purchases to make
@@ -67,7 +135,7 @@ contract HdisContent is SplitPayment, Ownable {
         address buyer = msg.sender;
         purchases[buyer].push(_contentId);
         emit purchaseContentEvent(content, buyer);
-        distribute();
+        distribute(_contentId);
     }
 
 
