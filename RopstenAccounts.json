@@ -1,0 +1,10 @@
+{
+  "accounts": {
+    "account_1": {"public_key": "0x802f75067b7502FCF18ffA6B43A143f37ac47fc2",
+                  "private_key": "0xcc9da801e2338bbf9fe025e06fe55eb5a055651d270483b2161e8f9b011ba3c1" },
+    "account_2": {"public_key": "0xd7f6D35de76e74F40cC66f69227E7296f1191DB8",
+                  "private_key": "0x32aec4b617b98e1875acc47e9ac54b8c31053bd8b45c422bc534a6dc9f38f2e9" },
+    "account_3": {"public_key": "0x7fbE57f4dB9D9089Df96204b41346213F9AB6244",
+                  "private_key": "0xb152d795c11388058f61dfb72589e16fa8545abba1322aaffd4311fd9fa4b157" }
+  }
+}
