@@ -3,7 +3,7 @@ from web3.auto import w3
 import json
 
 HOSTNAME = "https://ropsten.infura.io/"
-CONTRACT_ADDRESS = Web3.toChecksumAddress("0xaac8704ddc2ecaf71e089fe6a4f904d462fe2e0b")
+CONTRACT_ADDRESS = Web3.toChecksumAddress("0x4b61b13e7c0c4e3858772b9cc036484c89ec2d21")
 ABI=json.load(open("utils/ABI.json", "r"))
 PUBLIC_KEY="0x802f75067b7502FCF18ffA6B43A143f37ac47fc2"
 PRIVATE_KEY="0xcc9da801e2338bbf9fe025e06fe55eb5a055651d270483b2161e8f9b011ba3c1"
