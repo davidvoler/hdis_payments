@@ -1,196 +1,5 @@
 [
 	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"name": "_mediaId",
-				"type": "uint256"
-			},
-			{
-				"name": "_mediaType",
-				"type": "uint256"
-			},
-			{
-				"name": "_creator",
-				"type": "address"
-			},
-			{
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "addContent",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"name": "_contributor",
-				"type": "address"
-			}
-		],
-		"name": "addContributor",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "claim",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_contentId",
-				"type": "uint256"
-			}
-		],
-		"name": "purchaseContent",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"components": [
-					{
-						"name": "mediaId",
-						"type": "uint256"
-					},
-					{
-						"name": "mediaType",
-						"type": "uint256"
-					},
-					{
-						"name": "creator",
-						"type": "address"
-					},
-					{
-						"name": "weiPrice",
-						"type": "uint256"
-					},
-					{
-						"name": "contributors",
-						"type": "address[]"
-					}
-				],
-				"indexed": true,
-				"name": "content",
-				"type": "tuple"
-			}
-		],
-		"name": "addContentEvent",
-		"type": "event"
-	},
-	{
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "fallback"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"components": [
-					{
-						"name": "mediaId",
-						"type": "uint256"
-					},
-					{
-						"name": "mediaType",
-						"type": "uint256"
-					},
-					{
-						"name": "creator",
-						"type": "address"
-					},
-					{
-						"name": "weiPrice",
-						"type": "uint256"
-					},
-					{
-						"name": "contributors",
-						"type": "address[]"
-					}
-				],
-				"indexed": true,
-				"name": "content",
-				"type": "tuple"
-			},
-			{
-				"indexed": false,
-				"name": "buyer",
-				"type": "address"
-			}
-		],
-		"name": "purchaseContentEvent",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"constant": true,
 		"inputs": [
 			{
@@ -223,6 +32,90 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "totalShares",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_contentId",
+				"type": "uint256"
+			}
+		],
+		"name": "purchaseContent",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "payees",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getContentIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_content",
+				"type": "uint256"
+			}
+		],
+		"name": "claim",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -266,12 +159,21 @@
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "getContentIds",
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "shares",
 		"outputs": [
 			{
 				"name": "",
-				"type": "uint256[]"
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -293,6 +195,24 @@
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"name": "_contributor",
+				"type": "address"
+			}
+		],
+		"name": "addContributor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [
 			{
@@ -300,11 +220,11 @@
 				"type": "uint256"
 			}
 		],
-		"name": "payees",
+		"name": "totalReleased",
 		"outputs": [
 			{
 				"name": "",
-				"type": "address"
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -314,6 +234,10 @@
 	{
 		"constant": true,
 		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
 			{
 				"name": "",
 				"type": "address"
@@ -331,28 +255,44 @@
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"constant": false,
 		"inputs": [
 			{
-				"name": "",
+				"name": "newOwner",
 				"type": "address"
 			}
 		],
-		"name": "shares",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"name": "transferOwnership",
+		"outputs": [],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "totalReleased",
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_mediaId",
+				"type": "uint256"
+			},
+			{
+				"name": "_mediaType",
+				"type": "uint256"
+			},
+			{
+				"name": "_creator",
+				"type": "address"
+			},
+			{
+				"name": "_price",
+				"type": "uint256"
+			}
+		],
+		"name": "addContent",
 		"outputs": [
 			{
 				"name": "",
@@ -360,21 +300,108 @@
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [],
-		"name": "totalShares",
-		"outputs": [
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "constructor"
+	},
+	{
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "fallback"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
 			{
-				"name": "",
-				"type": "uint256"
+				"components": [
+					{
+						"name": "mediaId",
+						"type": "uint256"
+					},
+					{
+						"name": "mediaType",
+						"type": "uint256"
+					},
+					{
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"name": "weiPrice",
+						"type": "uint256"
+					},
+					{
+						"name": "contributors",
+						"type": "address[]"
+					}
+				],
+				"indexed": true,
+				"name": "content",
+				"type": "tuple"
 			}
 		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
+		"name": "addContentEvent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"name": "mediaId",
+						"type": "uint256"
+					},
+					{
+						"name": "mediaType",
+						"type": "uint256"
+					},
+					{
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"name": "weiPrice",
+						"type": "uint256"
+					},
+					{
+						"name": "contributors",
+						"type": "address[]"
+					}
+				],
+				"indexed": true,
+				"name": "content",
+				"type": "tuple"
+			},
+			{
+				"indexed": false,
+				"name": "buyer",
+				"type": "address"
+			}
+		],
+		"name": "purchaseContentEvent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
 	}
 ]
