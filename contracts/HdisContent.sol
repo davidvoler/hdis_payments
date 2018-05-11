@@ -55,6 +55,7 @@ contract HdisContent is SplitPayment, Ownable {
 
     function addContributor(uint _id, address _contributor) public onlyOwner {
         contents[_id].contributors.push(_contributor);
+        addPayee(_contributor, 1);
     }
 
     // TODO: limit num of purchases to make
@@ -66,6 +67,7 @@ contract HdisContent is SplitPayment, Ownable {
         address buyer = msg.sender;
         purchases[buyer].push(_contentId);
         emit purchaseContentEvent(content, buyer);
+        distribute();
     }
 
 
